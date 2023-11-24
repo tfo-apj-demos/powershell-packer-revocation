@@ -7,17 +7,19 @@ env:
   ITERATION_ID: ${{ github.event.client_payload.iteration.id
   HCP_ORG_ID: ${{ github.event.client_payload.organization_id
   HCP_PROJECT_ID: ${{ github.event.client_payload.project_id
-  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
-  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
-  VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
-  VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
-  VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
+  # HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+  # HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  # VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
+  # VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
+  # VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
 
 jobs:
   delete_revoked_templates:
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.1
+      - run: echo $BUCKET_SLUG
+      - run: echo $ITERATION_ID
+      - run: echo $HCP_ORG_ID
+      - run: echo $HCP_PROJECT_ID
     
     
