@@ -1,6 +1,7 @@
 on:
   repository_dispatch:
-    types: webhook
+    types: 
+      - webhook
 
 env:
   BUCKET_SLUG: ${{ github.event.client_payload.eventPayload.bucket.slug }} 
