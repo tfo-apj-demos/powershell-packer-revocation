@@ -18,5 +18,6 @@ jobs:
       - run: echo $ITERATION_ID
       - run: echo $HCP_ORG_ID
       - run: echo $HCP_PROJECT_ID
+      - run: echo ${{ github.event.client_payload }}
     
     
