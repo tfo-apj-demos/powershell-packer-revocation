@@ -1,18 +1,14 @@
 on:
   repository_dispatch:
     types: 
-      - webhook
+      - image_revocation
 
 env:
-  BUCKET_SLUG: ${{ github.event.client_payload.eventPayload.bucket.slug }} 
-  ITERATION_ID: ${{ github.event.client_payload.iteration.id }}
+  BUCKET_SLUG: ${{ github.event.client_payload.bucket_slug }} 
+  ITERATION_ID: ${{ github.event.client_payload.iteration_id }}
   HCP_ORG_ID: ${{ github.event.client_payload.organization_id }}
   HCP_PROJECT_ID: ${{ github.event.client_payload.project_id }}
-  # HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
-  # HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
-  # VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
-  # VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
-  # VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
+  
 
 jobs:
   delete_revoked_templates:
