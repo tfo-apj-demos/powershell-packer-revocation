@@ -14,6 +14,7 @@ env:
   VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
   HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  PSModulePath: "/usr/local/share/powershell/Modules"
   
 
 jobs:
