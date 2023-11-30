@@ -35,6 +35,13 @@ $VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $Itera
 # --- Authenticate to vCenter and Delete VM
 Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
-$Template = Get-Template $VMName 
+$Template = try {
+  Get-Template $VMName -ErrorAction SilentlyContinue
+}
+  catch {
+    "Unable to find a template with name $VMName, searching for virtual machine instead."
+    $Template = Get-VM $VMName -ErrorAction SilentlyContinue
+  }
+
 Write-Host "Deleting $Template"
-Remove-VM $VMName -DeletePermanently
+Remove-VM $Template
