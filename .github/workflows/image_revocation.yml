@@ -2,7 +2,7 @@ on:
   repository_dispatch:
     types: 
       - image_revocation
-
+  workflow_dispatch:
 env:
   BUCKET_SLUG: ${{ github.event.client_payload.bucket_slug }} 
   ITERATION_ID: ${{ github.event.client_payload.iteration_id }}
