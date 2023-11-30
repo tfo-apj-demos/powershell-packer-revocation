@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Install PowerCLI
         shell: pwsh
-        run: Install-Module VMware.PowerCLI -Scope CurrentUser
+        run: Install-Module VMware.PowerCLI -Scope CurrentUser -Force
       - name: Delete Revoked Images 
         run: pwsh -f ./main.ps1
       
