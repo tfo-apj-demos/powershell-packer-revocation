@@ -23,7 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
       - name: Delete Revoked Images
-        shell: pwsh
-        run: ./main.ps1
-      
+        #shell: pwsh
+        run: pwsh -f ./main.ps1
     
