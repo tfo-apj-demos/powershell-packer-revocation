@@ -20,7 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
       - name : Install Powershell
-        run: sudo apt install powershell
+        run: sudo snap install powershell --classic
       - name: Delete Revoked Images 
         run: pwsh -f ./main.ps1
     
