@@ -8,6 +8,9 @@ env:
   ITERATION_ID: ${{ github.event.client_payload.iteration_id }}
   HCP_ORG_ID: ${{ github.event.client_payload.organization_id }}
   HCP_PROJECT_ID: ${{ github.event.client_payload.project_id }}
+  VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
+  VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
+  VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
   
 
 jobs:
@@ -18,6 +21,5 @@ jobs:
       - run: echo $ITERATION_ID
       - run: echo $HCP_ORG_ID
       - run: echo $HCP_PROJECT_ID
-      - run: echo ${{ github.event.client_payload }}
     
     
