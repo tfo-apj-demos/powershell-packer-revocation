@@ -3,9 +3,12 @@ $ClientId = $env:HCP_CLIENT_ID
 $ClientSecret = $env:HCP_CLIENT_SECRET
 $OrgId = $env:HCP_ORG_ID
 $ProjectId = $env:HCP_PROJECT_ID
+$BucketSlug = $env:BUCKET_SLUG
+$IterationId = $env:ITERATION_ID
 $vCenterUsername = $env:VCENTER_USERNAME
 $vCenterPassword = $env:VCENTER_PASSWORD
 $vCenterServer = $env:VCENTER_SERVER
+
 
 # --- Import Modules
 $Modules = $(
@@ -17,14 +20,6 @@ $Modules = $(
 foreach ($Module in $Modules) {
   Import-Module "./$Module" -Force
 }
-# --- Parse Webhook Payload
-# 
-# $WebhookJson = Get-Content .\sample.json -Raw | ConvertFrom-Json 
-
-# $BucketSlug  = $WebhookJson.eventPayload.bucket.slug
-# $IterationId = $WebhookJson.eventPayload.iteration.id
-# $OrgId       = $WebhookJson.eventPayload.organization_id
-# $ProjectId   = $WebhookJson.eventPayload.project_id
 
 # --- Get Revoked Image Data
 Write-Host -ForegroundColor Green -NoNewline "Connecting to HashiCorp Cloud Platform..."
