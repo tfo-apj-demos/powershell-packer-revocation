@@ -36,4 +36,5 @@ $VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $Itera
 Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
 $Template = Get-Template $VMName 
-Write-Host $Template
+Write-Host "Deleting $Template"
+Remove-VM $VMName -DeletePermanently
