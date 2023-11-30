@@ -1,3 +1,4 @@
+name: HCP Packer Revoke Images
 on:
   repository_dispatch:
     types: 
