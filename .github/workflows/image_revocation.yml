@@ -17,9 +17,5 @@ jobs:
   delete_revoked_templates:
     runs-on: "ubuntu-latest"
     steps:
-      - run: echo $BUCKET_SLUG
-      - run: echo $ITERATION_ID
-      - run: echo $HCP_ORG_ID
-      - run: echo $HCP_PROJECT_ID
-    
+      - run: ./main.ps1
     
