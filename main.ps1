@@ -45,11 +45,11 @@ $Template = try {
   }
 
 try {
-  Remove-Template -Name $Template
+  Remove-Template $Template
 }
 
 catch {
-  Remove-VM -Name $VM
+  Remove-VM $VM
 }
 
  
