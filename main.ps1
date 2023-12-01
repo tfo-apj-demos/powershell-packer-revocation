@@ -45,11 +45,11 @@ $Template = try {
   }
 
 try {
-  Remove-Template $Template -Force
+  Remove-Template $Template -DeletePermanently -Confirm:$true 
 }
 
 catch {
-  Remove-VM $VM -Force
+  Remove-VM $VM -DeletePermanently -Confirm:$true 
 }
 
  
