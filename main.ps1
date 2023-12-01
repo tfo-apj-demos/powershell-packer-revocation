@@ -36,11 +36,11 @@ $VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $Itera
 Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
 $Template = try {
-  Get-Template $VMName -ErrorAction SilentlyContinue
+  Get-Template -Name $VMName -ErrorAction SilentlyContinue
 }
   catch {
     "Unable to find a template with name $VMName, searching for virtual machine instead."
-    $Template = Get-VM $VMName -ErrorAction SilentlyContinue
+    $Template = Get-VM -Name $VMName -ErrorAction SilentlyContinue
   }
 
 Write-Host "Deleting $Template"
