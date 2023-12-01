@@ -1,8 +1,9 @@
+name: HCP Packer Revoke Images
 on:
   repository_dispatch:
     types: 
       - image_revocation
-
+  workflow_dispatch:
 env:
   BUCKET_SLUG: ${{ github.event.client_payload.bucket_slug }} 
   ITERATION_ID: ${{ github.event.client_payload.iteration_id }}
@@ -13,6 +14,7 @@ env:
   VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
   HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
   HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  #PSModulePath: "/usr/local/share/powershell/Modules"
   
 
 jobs:
@@ -21,7 +23,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Delete Revoked Images 
+      - name: Delete Revoked Images
+        #shell: pwsh
         run: pwsh -f ./main.ps1
-      
     

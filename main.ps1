@@ -9,6 +9,7 @@ $vCenterUsername = $env:VCENTER_USERNAME
 $vCenterPassword = $env:VCENTER_PASSWORD
 $vCenterServer = $env:VCENTER_SERVER
 
+Write-Host "PSModulePath: " $env:PSModulePath
 
 # --- Import Modules
 $Modules = $(
