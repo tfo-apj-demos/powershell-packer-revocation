@@ -41,8 +41,15 @@ $Template = try {
 }
   catch {
     "Unable to find a template with name $VMName, searching for virtual machine instead."
-    $Template = Get-VM -Name $VMName -ErrorAction SilentlyContinue
+    $VM = Get-VM -Name $VMName -ErrorAction SilentlyContinue
   }
 
-Write-Host "Deleting $Template"
-Remove-VM $Template
+try {
+  Remove-Template -Name $Template
+}
+
+catch {
+  Remove-VM -Name $VM
+}
+
+ 
