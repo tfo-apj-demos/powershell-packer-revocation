@@ -8,6 +8,7 @@ $IterationId = $env:ITERATION_ID
 $vCenterUsername = $env:VCENTER_USERNAME
 $vCenterPassword = $env:VCENTER_PASSWORD
 $vCenterServer = $env:VCENTER_SERVER
+$VMName = $env:IMAGE_NAME
 
 Write-Host "PSModulePath: " $env:PSModulePath
 
@@ -31,25 +32,22 @@ Connect-HCP -ClientId $ClientId -ClientSecret $SecureClientSecret -OrgId $OrgId 
 Write-Host  -ForegroundColor Green "Finding revoked image name."
 
 $VMName = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $IterationId | Select-Object -Expand Images | Select-Object -ExpandProperty ImageId
-$VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $IterationId | Select-Object -Expand Images | Select-Object -ExpandProperty Id
+#$VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $IterationId | Select-Object -Expand Images | Select-Object -ExpandProperty Id
 
 # --- Authenticate to vCenter and Delete VM
 Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
-$Template = try {
-  Get-Template -Name $VMName -ErrorAction SilentlyContinue
-}
-  catch {
-    "Unable to find a template with name $VMName, searching for virtual machine instead."
-    $VM = Get-VM -Name $VMName -ErrorAction SilentlyContinue
+
+# --- Check view to see if image is a Template or Virtual Machine
+$VMView = Get-View -ViewType VirtualMachine -Filter @{"Name"=$VMName} 
+
+# --- Cleanup image
+switch ($VMView.Config.Template) {
+  $false {Get-VM -Name $VMName | Remove-VM -ErrorAction SilentlyContinue }
+  $true {Get-Template -Name $VMName | Remove-Template -ErrorAction SilentlyContinue }
+  Default {
+    "No matching images found."
   }
-
-try {
-  Remove-Template $Template -DeletePermanently -Confirm:$false -ErrorAction SilentlyContinue
-}
-
-catch {
-  Remove-VM $VM -DeletePermanently -Confirm:$false
 }
 
  
