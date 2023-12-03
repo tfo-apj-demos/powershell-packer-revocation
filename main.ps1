@@ -43,8 +43,8 @@ $VMView = Get-View -ViewType VirtualMachine -Filter @{"Name"=$VMName}
 
 # --- Cleanup image
 switch ($VMView.Config.Template) {
-  $false {Get-VM -Name $VMName | Remove-VM -ErrorAction SilentlyContinue }
-  $true {Get-Template -Name $VMName | Remove-Template -ErrorAction SilentlyContinue }
+  $false {Get-VM -Name $VMName | Remove-VM -DeletePermanently -ErrorAction SilentlyContinue }
+  $true {Get-Template -Name $VMName | Remove-Template -DeletePermanently -ErrorAction SilentlyContinue }
   Default {
     "No matching images found."
   }
