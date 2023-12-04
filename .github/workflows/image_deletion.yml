@@ -1,8 +1,8 @@
-name: HCP Packer Revoke Images
+name: HCP Packer Delete Images
 on:
   repository_dispatch:
     types: 
-      - image_revocation
+      - image_deletion
   workflow_dispatch:
 env:
   BUCKET_SLUG: ${{ github.event.client_payload.bucket_slug }} 
@@ -22,6 +22,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Tag Revoked Images
-        run: pwsh -f ./revoke.ps1
+      - name: Delete Images
+        run: pwsh -f ./main.ps1
     
