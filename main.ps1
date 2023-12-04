@@ -39,15 +39,27 @@ Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
 
 # --- Check view to see if image is a Template or Virtual Machine
-$VMView = Get-View -ViewType VirtualMachine -Filter @{"Name"=$VMName} 
+$VMView = Get-View -ViewType VirtualMachine -Filter @{"Name" = $VMName } 
 
 # --- Cleanup image
 switch ($VMView.Config.Template) {
-  $false {Get-VM -Name $VMName | Remove-VM -DeletePermanently -ErrorAction SilentlyContinue }
-  $true {Get-Template -Name $VMName | Remove-Template -DeletePermanently -ErrorAction SilentlyContinue }
+  $false {
+    try {
+      Get-VM -Name $VMName | Remove-VM -DeletePermanently -Confirm:$false -ErrorAction Stop
+    }
+    catch {
+      Write-Host "Error removing VM: $_"
+    }
+  }
+  $true {
+    try {
+      Get-Template -Name $VMName | Remove-Template -DeletePermanently -Confirm:$false -ErrorAction Stop
+    }
+    catch {
+      Write-Host "Error removing Template: $_"
+    }
+  }
   Default {
     "No matching images found."
   }
 }
-
- 
