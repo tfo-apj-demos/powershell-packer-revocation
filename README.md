@@ -1,0 +1,1 @@
+[![Image Revocation](https://github.com/tfo-apj-demos/powershell-packer-revocation/actions/workflows/image_revocation.yml/badge.svg)](https://github.com/tfo-apj-demos/powershell-packer-revocation/actions/workflows/image_revocation.yml)
