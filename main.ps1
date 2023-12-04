@@ -32,20 +32,34 @@ Connect-HCP -ClientId $ClientId -ClientSecret $SecureClientSecret -OrgId $OrgId 
 Write-Host  -ForegroundColor Green "Finding revoked image name."
 
 $VMName = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $IterationId | Select-Object -Expand Images | Select-Object -ExpandProperty ImageId
+#$VMId = Get-HCPPackerIterationBuilds -BucketSlug $BucketSlug -IterationId $IterationId | Select-Object -Expand Images | Select-Object -ExpandProperty Id
 
-# --- Authenticate to vCenter and Tag VM
+# --- Authenticate to vCenter and Delete VM
+Write-Host -ForegroundColor Green "Deleting template $VMName..."
 Connect-VIserver $vCenterServer -User $vCenterUsername -Password $vCenterPassword
-$tag = Get-Tag "revoked"
 
 # --- Check view to see if image is a Template or Virtual Machine
-try { $VMView = Get-View -ViewType VirtualMachine -Filter @{"Name"=$VMName} 
+$VMView = Get-View -ViewType VirtualMachine -Filter @{"Name" = $VMName } 
 
-  switch ($VMView.Config.Template) {
-    $false { Get-VM -Name $VMName | New-TagAssignment -Tag $tag } #| Remove-VM -confirm:$false -ErrorAction SilentlyContinue }
-    $true { Get-Template -Name $VMName | New-TagAssignment -Tag $tag } # | Remove-Template -confirm:$false -ErrorAction SilentlyContinue }
+# --- Cleanup image
+switch ($VMView.Config.Template) {
+  $false {
+    try {
+      Get-VM -Name $VMName | Remove-VM -DeletePermanently -Confirm:$false -ErrorAction Stop
+    }
+    catch {
+      Write-Host "Error removing VM: $_"
+    }
   }
-}
-
-catch { 
-  Write-Host "No matching Virtual Machine or Template found with name $VMName."
+  $true {
+    try {
+      Get-Template -Name $VMName | Remove-Template -DeletePermanently -Confirm:$false -ErrorAction Stop
+    }
+    catch {
+      Write-Host "Error removing Template: $_"
+    }
+  }
+  Default {
+    "No matching images found."
+  }
 }
