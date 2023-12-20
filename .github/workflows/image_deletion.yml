@@ -11,7 +11,7 @@ env:
   VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
 
 jobs:
-  tag_revoked_images:
+  delete_images:
     runs-on: [self-hosted, gcve]
     steps:
       - name: Checkout code
