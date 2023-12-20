@@ -14,7 +14,7 @@ jobs:
   delete_images:
     runs-on: [self-hosted, gcve]
     steps:
-      - run: echo ${{ github.event.client_payload.image_names }}
+      - run: echo ${{ join(github.event.client_payload.image_names, ',') }}
       # - name: Checkout code
       #   uses: actions/checkout@v4.1.1
       # - name: Delete Images
