@@ -5,7 +5,7 @@ on:
       - image_deletion
   workflow_dispatch:
 env:
-  IMAGE_NAMES: ${{ github.event.client_payload.image_names }}
+  IMAGE_NAMES: ${{ fromJson(github.event.client_payload.image_names) }}
   VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
   VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
   VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
