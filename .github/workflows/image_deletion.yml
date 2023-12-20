@@ -5,7 +5,7 @@ on:
       - image_deletion
   workflow_dispatch:
 env:
-  IMAGE_NAMES: ${{ (fromJson(github.event.client_payload.image_names)) }}
+  #IMAGE_NAMES: ${{ (fromJson(github.event.client_payload.image_names)) }}
   VCENTER_USERNAME: ${{ secrets.VCENTER_USERNAME }}
   VCENTER_PASSWORD: ${{ secrets.VCENTER_PASSWORD }}
   VCENTER_SERVER: ${{ secrets.VCENTER_SERVER }}
@@ -14,8 +14,9 @@ jobs:
   delete_images:
     runs-on: [self-hosted, gcve]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.1
-      - name: Delete Images
-        run: pwsh -f ./main.ps1
+      - run: echo ${{ github.event.client_payload.image_names }}
+      # - name: Checkout code
+      #   uses: actions/checkout@v4.1.1
+      # - name: Delete Images
+      #   run: pwsh -f ./main.ps1
     
