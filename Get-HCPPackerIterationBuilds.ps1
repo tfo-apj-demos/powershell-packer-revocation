@@ -63,7 +63,10 @@ function Get-HCPPackerIterationBuilds {
     $URI="/packer/2021-04-30/organizations/$OrgId/projects/$ProjectId/images/$BucketSlug/iterations/$IterationId/builds"
     $Response = Invoke-HCPRestMethod -URI $URI -Method GET
 
+    Write-Host "Number of builds retrieved: $($Response.builds.Count)" # Logging `$Response.builds` Information
+
     foreach ($Build in $Response.builds) {
+      Write-Host "Build ID: $($Build.id), Status: $($Build.status), Created At: $($Build.created_at)" # Logging `$Build` Information
       [PSCustomObject] @{
         Id = $Build.id 
         IterationId = $Build.iteration_id
@@ -86,7 +89,7 @@ function Get-HCPPackerIterationBuilds {
     }
   }
   catch [Exception]{
-
+      Write-Host "Error occurred while retrieving builds: $_"
       throw
   }
 }
